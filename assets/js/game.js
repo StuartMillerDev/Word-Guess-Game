@@ -10,7 +10,6 @@ var game={
   "guess":[]
 }; //End of game definition
 
-var used=[];
 
 var temp=["habit",
 "happily",
@@ -33,16 +32,17 @@ var temp=["habit",
 
 //checks the user input
 function checkLetter(x){
-  //pattern of vvalid characters
-var regexp=/[qwertyuiopasdfghjklzxcvbnm]/;
+  //pattern of valid characters (/i is case insensitive search)
+var regexp=/[qwertyuiopasdfghjklzxcvbnm]/i;
 //input must be a valid character and must be a string
   if(regexp.test(x) && typeOf(x)=="string"){
     //pass the letter to the checkWord method if its not already used
-    if(used.!contains(x)){
+    if(game["guess"].includes(x)!=-1){
       checkWord(x);
     }
     else{
-      used.push(x);
+      //add the unused letter to the used array
+      game["guess"].push(x);
     }
   }
 }
@@ -55,25 +55,59 @@ function checkWord(y){
     if(y==letter){
       //show letter on the screen
 
+
     }
-    else if (game["lives"]>0) {
+    else if (game["lives"]>0){
+      //you lose a life
       game["lives"]-=1;
       //animate something
     }
     else{
-
+      //something
     }
   }
 }
-//resets the game (continue)
-function resetGame(z){
-//reset Variables
-z["lives"]=6;
-z["word"]=temp[Math.floor(Math.random()*temp.length)];
-z["wins"]+=1;
 
+//checks for a victory condition and returns true/false
+function checkWin(){
+  var str=game["guess"];
+  var victory=false;
+  var count=0;
+  //go through the array of guessed letters and see if the word contains it
+  for(var i=0; i<str.length;i++){
+    if(game["word"].includes(str[i])){
+      count++;
+    }
+  }
+  //After itterating through the word and letters check if we guessed correctly
+  if(count=game["word"].length){
+    victory=true;
+  }
+//Victory if you avve not used up all your lives and have guessed all the letters
+  if(game["lives"]>0 && victory){
+    return true;
+  }
+  else{
+    return false;
+  }
+}
+
+//resets the game (continue)
+function resetGame(){
+//reset Variables
+game["lives"]=6;
+game["word"]=temp[Math.floor(Math.random()*temp.length)];
+game["wins"]+=1;
 }
 //total reset of game
 function newGame(){
-
+  //reset all values back to default settings
+game["lives"]=6;
+game["score"]=0;
+game["win"]=0;
+game["lose"]=0;
+game["word"]=temp[Math.floor(Math.random()*temp.length)];
+game["guess"]=[];
 }
+
+//ON KEY EVENTS BELOW
