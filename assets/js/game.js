@@ -54,43 +54,28 @@ function checkWord(y){
     var letter=game["word"][i];
     if(y==letter){
       //show letter on the screen
+      showLetter(y);
+      }
+    }
+  }
+
+  //unhides all the letters passed to this function.
+  function showLetter(z){
+    //collect the hidden word content
+    var str=$("#wordHidden").textContent;
+    //loop through the word
+    for(var i=0; i<game["word"].length; i++){
+      //find the index of the correct letter
+      if(game["word"][i]==z){
+        //rebuild the string with the unhidden letter
+        str[i]=z;
+      }
+    }
+    //update the html
+    $("#wordHidden").html(str);
+  }
 
 
-    }
-    else if (game["lives"]>0){
-      //you lose a life
-      game["lives"]-=1;
-      //animate something
-    }
-    else{
-      //something
-    }
-  }
-}
-
-//checks for a victory condition and returns true/false
-function checkWin(){
-  var str=game["guess"];
-  var victory=false;
-  var count=0;
-  //go through the array of guessed letters and see if the word contains it
-  for(var i=0; i<str.length;i++){
-    if(game["word"].includes(str[i])){
-      count++;
-    }
-  }
-  //After itterating through the word and letters check if we guessed correctly
-  if(count=game["word"].length){
-    victory=true;
-  }
-//Victory if you avve not used up all your lives and have guessed all the letters
-  if(game["lives"]>0 && victory){
-    return true;
-  }
-  else{
-    return false;
-  }
-}
 
 //resets the game (continue)
 function resetGame(){
@@ -110,4 +95,23 @@ game["word"]=temp[Math.floor(Math.random()*temp.length)];
 game["guess"]=[];
 }
 
+//Builds the string with hidden characters
+function resetWordHidden(){
+  var letter=game["word"].length;
+  var str="";
+  //build the hidden string
+  for(var i=0; i<letter; i++){
+    str+="-"
+  }
+  //update html with hidden word "--------" style
+  $("#wordHidden").html(str);
+}
+
+
+
 //ON KEY EVENTS BELOW
+
+
+document.onkeyup = function(event) {
+checkLetter();
+}
