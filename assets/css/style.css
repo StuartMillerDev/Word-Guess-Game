@@ -3,10 +3,10 @@
    License: none (public domain)
 */
 
-html, body, div,
+/* html, body, div,
 h1, h2, h3, h4, h5, h6, p, {
-	margin: 0;
-	padding: 0;
+	margin: 10em;
+	padding: 10;
 	border: 0;
 	font-size: 100%;
 	font: inherit;
@@ -17,7 +17,7 @@ h1, h2, h3, h4, h5, h6, p, {
 	background-color:#3F88C5;
 } */
 /* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure,
+/* article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
@@ -39,4 +39,4 @@ q:before, q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
-}
+} */ */
