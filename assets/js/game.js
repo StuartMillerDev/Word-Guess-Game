@@ -87,6 +87,7 @@ function checkWord(y){
       console.log(game["wordHidden"]);
     }
     //update the html
+
     $("#wordHidden").html(game["wordHidden"]); //output the current
   }
 
