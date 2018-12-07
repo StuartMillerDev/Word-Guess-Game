@@ -7,7 +7,8 @@ var game={
   "wins":0,
   "lose":0,
   "word":"",
-  "guess":[]
+  "guess":[],
+  "wordHidden":[]
 }; //End of game definition
 
 
@@ -67,31 +68,26 @@ function checkWord(y){
   //unhides all the letters passed to this function.
   function showLetter(z){
     //collect the hidden word content
-    var meh=[];
-    var str2=$("#wordHidden").text();
-    var str="";
-    console.log(str);
+    var meh=[]; //correct letters and dashes
+    var str=$("#wordHidden").text();
 
     //loop through the word
     for(var i=0; i<game["word"].length; i++){
       //find the index of the correct letter
       //pass letters into an array and then compare
-      // console.log(str[i]);
-      // meh[i]=game["word"][i];
       if(game["word"][i]==z){
         //rebuild the string with the unhidden letter
-        //console.log(game["word"][i]);
         meh[i]=z;
-
-        // console.log(meh);
       }
-      else if(game["guess"].indexOf(z)==-1){
+      else if(game["word"][i].indexOf(z)==-1){
         meh[i]="-";
       }
-      str+=meh[i];
+      //rebuild string with correct dashes and letters
+      game["wordHidden"][i]=meh[i];
+      console.log(game["wordHidden"]);
     }
     //update the html
-    $("#wordHidden").html(str);
+    $("#wordHidden").html(game["wordHidden"]); //output the current
   }
 
 
