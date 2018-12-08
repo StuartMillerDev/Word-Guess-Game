@@ -38,7 +38,7 @@ var temp=["habit",
 
 //checks the user input
 function checkLetter(letter){
-  console.log("Check letter:",letter);
+
   //pattern of valid characters (/i is case insensitive search)
 
     var regexp = /[a-z]/;
@@ -61,7 +61,7 @@ function checkLetter(letter){
 }
 //checks the user selected letter against the current word
 function checkWord(letter){
-  console.log("Check word:",letter);
+
   //add the valid character to the guessed array
 
   //Loop through the current "word" string
@@ -76,8 +76,6 @@ function checkWord(letter){
 
   //unhides all the letters passed to this function.
   function showLetter(letter){
-    console.log("Show Letter: ",letter);
-    console.log(game["guess"]);
     //collect the hidden word content
     var str=$("#wordHidden").text();
     //loop through the word
@@ -92,7 +90,7 @@ function checkWord(letter){
         game["wordHidden"][i]="-";
       }
     }
-    console.log(game["word"])
+
     //update the html
     $("#wordHidden").html(game["wordHidden"]); //output the current
     $("#guess").html(game["guess"])
