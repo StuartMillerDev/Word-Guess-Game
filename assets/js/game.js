@@ -1,5 +1,8 @@
 //Variables
 
+
+
+
 //define game object
 var game={
   "lives":6,
@@ -13,15 +16,15 @@ var game={
 
 
 var temp=["habit",
-"happily",
-"Harry" ,
+"happilletter",
+"Harrletter" ,
 "heading" ,
 "hunter" ,
 "Illinois" ,
 "image",
 "independent",
 "instant",
-"January" ,
+"Januarletter" ,
 "kids" ,
 "label" ,
 "Lee",
@@ -34,18 +37,22 @@ var temp=["habit",
 
 
 //checks the user input
-function checkLetter(x){
+function checkLetter(letter){
+  console.log("Check letter:",letter);
   //pattern of valid characters (/i is case insensitive search)
-var regexp=/[qwertyuiopasdfghjklzxcvbnm]/i;
+
+    var regexp = /[a-z]/;
 //input must be a valid character and must be a string
-  if(regexp.test(x)){
-    //pass the letter to the checkWord method if its not already used
-    if(game["guess"].includes(x)!=-1){
-      checkWord(x);
+
+  if(regexp.test(letter)){
+    //pass the letter to the checkWord method if its not alreadletter used
+    if(game["guess"].includes(letter)!=-1){
+      game["guess"].push(letter);
+      checkWord(letter);
     }
     else{
-      //add the unused letter to the used array
-      game["guess"].push(x);
+      //add the unused letter to the used arraletter
+      game["guess"].push(letter);
       for(var i=0; i<game["guess"].length; i++){
         $("#guess").html(game["word"][i]);
       }
@@ -53,42 +60,42 @@ var regexp=/[qwertyuiopasdfghjklzxcvbnm]/i;
   }
 }
 //checks the user selected letter against the current word
-function checkWord(y){
+function checkWord(letter){
+  console.log("Check word:",letter);
+  //add the valid character to the guessed array
+
   //Loop through the current "word" string
   for(var i=0; i<game["word"].length; i++){
     //check if letter is at the current index of the string
-    var letter=game["word"][i];
-    if(y==letter){
+    if(letter==game["word"][i]){
       //show letter on the screen
-      showLetter(y);
+      showLetter(letter);
       }
     }
   }
 
   //unhides all the letters passed to this function.
-  function showLetter(z){
+  function showLetter(letter){
+    console.log("Show Letter: ",letter);
+    console.log(game["guess"]);
     //collect the hidden word content
-    var meh=[]; //correct letters and dashes
     var str=$("#wordHidden").text();
-
     //loop through the word
     for(var i=0; i<game["word"].length; i++){
       //find the index of the correct letter
-      //pass letters into an array and then compare
-      if(game["word"][i]==z){
+      //pass letters into an arraletter and then compare
+      if(game["word"][i]==letter){
         //rebuild the string with the unhidden letter
-        meh[i]=z;
+        game["wordHidden"][i]=letter;
       }
-      else if(game["word"][i].indexOf(z)==-1){
-        meh[i]="-";
+      else if(game["guess"].indexOf(game["word"][i])==-1){
+        game["wordHidden"][i]="-";
       }
-      //rebuild string with correct dashes and letters
-      game["wordHidden"][i]=meh[i];
-      console.log(game["wordHidden"]);
     }
+    console.log(game["word"])
     //update the html
-
     $("#wordHidden").html(game["wordHidden"]); //output the current
+    $("#guess").html(game["guess"])
   }
 
 
@@ -121,18 +128,19 @@ function resetWordHidden(){
   for(var i=0; i<letter; i++){
     str+="-"
   }
-  //update html with hidden word "--------" style
+  //update html with hidden word "--------" stletterle
   $("#wordHidden").html(str);
 }
 
 
 
-//ON KEY EVENTS BELOW
+//ON KEletter EVENTS BELOW
 
 $(document).ready(function(){
   newGame();
 });
 
 document.onkeyup = function(e) {
-checkLetter(e.key.toLowerCase());
+
+checkLetter(e.key);
 }
