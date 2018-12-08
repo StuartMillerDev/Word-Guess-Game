@@ -6,7 +6,6 @@
 //define game object
 var game={
   "lives":6,
-  "score":0,
   "wins":0,
   "lose":0,
   "word":"",
@@ -38,9 +37,9 @@ var temp=["habit",
 
 //checks the user input
 function checkLetter(letter){
+console.log(game["word"]);
 
   //pattern of valid characters (/i is case insensitive search)
-
     var regexp = /[a-z]/;
 //input must be a valid character and must be a string
 
@@ -57,13 +56,16 @@ function checkLetter(letter){
         $("#guess").html(game["word"][i]);
       }
     }
+    $("#guess").html(game["guess"]);
   }
 }
 //checks the user selected letter against the current word
 function checkWord(letter){
 
+  if(game["word"].indexOf(letter)==-1){
+      game["lives"]--;
+  }
   //add the valid character to the guessed array
-
   //Loop through the current "word" string
   for(var i=0; i<game["word"].length; i++){
     //check if letter is at the current index of the string
@@ -90,27 +92,49 @@ function checkWord(letter){
         game["wordHidden"][i]="-";
       }
     }
-
     //update the html
     $("#wordHidden").html(game["wordHidden"]); //output the current
-    $("#guess").html(game["guess"])
+
   }
 
+function updateInfo(){
+  $("#lives").html("You have "+game["lives"]+" guesses left");
+  $("#wins").html("You have "+game["win"]+" wins");
+  $("#losses").html("You have "+game["lose"]+" losses");
+  $("#guess").html("");
+}
 
+function checkGame(){
+  console.log("CheckGame")
+  //check for lose
+  if(game["lives"]<1){
+    game["lose"]--;
+    resetGame();
+  }
+  //check for win
+  var str=$("#wordHidden").html();
+  if(str.indexOf("-")==-1 && game["lives"]>0 ){
+    game["win"]++;
+    alert("YOU WON! The word was: "+game["word"])
+    resetGame();
+
+  }
+}
 
 //resets the game (continue)
 function resetGame(){
 //reset Variables
 game["lives"]=6;
 game["word"]=temp[Math.floor(Math.random()*temp.length)];
-game["wins"]+=1;
+game["guess"]=[];
+resetWordHidden();
+updateInfo();
 // resetWordHidden();
 }
 //total reset of game
 function newGame(){
   //reset all values back to default settings
 game["lives"]=6;
-game["score"]=0;
 game["win"]=0;
 game["lose"]=0;
 game["word"]=temp[Math.floor(Math.random()*temp.length)];
@@ -130,8 +154,6 @@ function resetWordHidden(){
   $("#wordHidden").html(str);
 }
 
-
-
 //ON KEletter EVENTS BELOW
 
 $(document).ready(function(){
@@ -139,6 +161,7 @@ $(document).ready(function(){
 });
 
 document.onkeyup = function(e) {
-
 checkLetter(e.key);
+updateInfo();
+checkGame();
 }
