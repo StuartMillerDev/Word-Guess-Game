@@ -1,8 +1,5 @@
 //Variables
 
-
-
-
 //define game object
 var game={
   "lives":6,
@@ -37,7 +34,6 @@ var temp=["habit",
 
 //checks the user input
 function checkLetter(letter){
-console.log(game["word"]);
 
   //pattern of valid characters (/i is case insensitive search)
     var regexp = /[a-z]/;
